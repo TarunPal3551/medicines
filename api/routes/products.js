@@ -18,11 +18,11 @@ cb(null,true);
     else{
         cb(null,false);
     }
-    //for reject
-    cb(null,false);
+    // //for reject
+    // cb(null,false);
 
-    //for accept
-    cb(null,true)
+    // //for accept
+    // cb(null,true)
 };
 const upload=multer({storage: storages,limits:{
    fileSize:1024*1024*5
@@ -106,7 +106,7 @@ router.get('/:productId',(req,res,next)=>{
         ).catch(err=>{console.log(err);
         res.status(500).json({
             error:err
-        })
+        });
     
     });
 
