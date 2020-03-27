@@ -2,8 +2,6 @@ const express=require('express');
 const morgan=require('morgan');
 const bodyParser=require('body-parser');
 const mongoose=require('mongoose');
-const cool = require('cool-ascii-faces');
-
 const app=express();
 const productRoutes=require('./api/routes/products');
 const orderRoutes=require('./api/routes/orders');
@@ -31,6 +29,11 @@ app.use((req,res,next)=>{
 next();
 });
 ///Routes which should handle requests 
+app.set("view engine","ejs");
+app.route("/").get((req,res)=>{
+    res.render('home.ejs');
+    res.send("Working Successfully ");
+})
 app.use('/products',productRoutes);
 app.use('/orders',orderRoutes);
 app.use((req,res,next)=>{
