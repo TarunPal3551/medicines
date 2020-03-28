@@ -10,7 +10,8 @@ mongoose.connect('mongodb+srv://admin:'+ process.env.MONGO_ATLAS_PW+'@firstnode-
 
 useNewUrlParser:true,
 useUnifiedTopology: true,
-useFindAndModify:false
+useFindAndModify:false,
+useCreateIndex:true
 }));
 mongoose.Promise=global.Promise;
 app.use(morgan('dev'));
@@ -38,6 +39,7 @@ app.route("/").get((req,res)=>{
 app.use('/products',productRoutes);
 app.use('/orders',orderRoutes);
 app.use('/users',userRoutes);
+
 app.use((req,res,next)=>{
 const error =new Error('Not Found');
 error.status=404;
@@ -47,8 +49,7 @@ app.use((error,req,res,next)=>{
     res.status(error.status||500);
     res.json({
         error:{
-            message:error.message,
-            errorMessage:"500 Internal Error"
+            message:error.message
         }
 
 

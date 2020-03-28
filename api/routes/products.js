@@ -33,6 +33,7 @@ const Product=require('../models/product');
 router.get('/',(req,res,next)=>{
     Product.find().select('name price _id productImage').exec().then(docs=>{
 console.log(docs);
+
 const response={
     count:docs.length,
     products:docs.map(docs=>{
