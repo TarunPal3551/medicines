@@ -2,6 +2,7 @@ const express= require('express');
 const router= express.Router();
 const mongoose=require('mongoose');
 const multer=require('multer');
+
 const storages=multer.diskStorage({
  destination:function(req,file,cb){
      cb(null,'./uploads/');
@@ -63,8 +64,10 @@ res.status(200).json(response);
 
 
 });
-router.post('/',upload.single('productImage'),(req,res,next)=>{
+const checkAuth=require('../middleware/check-auth');
+router.post('/',checkAuth,upload.single('productImage'),(req,res,next)=>{
     console.log(req.file);
+    console.log(  req.userData );
     const product=new Product({
         _id:new mongoose.Types.ObjectId(),
         name:req.body.name,
@@ -128,7 +131,7 @@ router.get('/:productId',(req,res,next)=>{
         //         });
         // }
 });
-router.delete('/:productId',(req,res,next)=>{
+router.delete('/:productId',checkAuth,(req,res,next)=>{
 const id=req.param.productId;
 ////Get Solution after searching statOverflow and hit and trial of defined methods
     Product.deleteOne(id)
@@ -165,7 +168,7 @@ const id=req.param.productId;
 
 //     });
 // });
-router.patch("/:productId",(req,res,next)=>{
+router.patch("/:productId",checkAuth,(req,res,next)=>{
 
 const id=req.param.productId;
 const updateOne={};
