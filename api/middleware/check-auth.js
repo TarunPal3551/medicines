@@ -5,8 +5,19 @@ module.exports = (req, res, next) => {
             console.log(token);
             
             const decode = jwt.decode(token, process.env.JWT_KEY);
-            req.userData = decode;
-            next();
+            console.log(decode);
+            if(decode)
+            {
+                  req.userData = decode;
+                  next();
+            }
+            else{
+                  return res.status(401).json({
+                        message: 'Auth Failed'
+                  });
+            }
+           
+            
 
       } catch (error) {
             return res.status(401).json({
